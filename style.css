@@ -5,53 +5,197 @@
   box-sizing: border-box;
 }
 
+#theme-toggle {
+  position: fixed;
+  top: 2vh;
+  right: 2vw;
+  background: transparent;
+  padding: .1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+  z-index: 10;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  max-width: 10vw;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* dark theme */
+body {
+  background: radial-gradient(ellipse at center, #1b2735 0%, #0a0d13 100%);
+  overflow-y: auto;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.03), transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/*  stars */
+.star-group {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle 2.5s infinite ease-in-out;
+  pointer-events: none;
+  display: block;
+}
+
+.star-small {
+  width: 1px;
+  height: 1px;
+  box-shadow: 0 0 2px #ffffff66;
+  opacity: 0.4;
+}
+
+.star-medium {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 4px #ffffff88;
+  opacity: 0.6;
+}
+
+.star-big {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 6px white, 0 0 10px white;
+  opacity: 0.8;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.svg-moon {
+  position: absolute;
+  top: 11vh;
+  left: 5vw;
+  z-index: 2;
+  width: 10vw;
+  height: auto;
+  filter: drop-shadow(0 0 10px #ffffff88);
+  animation: glow-moon 4s ease-in-out infinite alternate,
+    moon-rotate 20s linear infinite;
+  display: block;
+}
+
+@keyframes glow-moon {
+  0% {
+    filter: drop-shadow(0 0 10px #ffffff44);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 20px #ffffff99);
+  }
+}
+
+@keyframes moon-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* __________________________________ */
+
+
+
+/* app box */
 .container {
-  width: 100%;
+  width: 90vw;
+  max-width: 800px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
-  padding: 20px;
+  background: transparent;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
 }
 
 .todo-app {
-  width: 100%;
+  width: 90%;
   max-width: 540px;
-  background-color: #ffffff;
-  padding: 40px 30px 70px;
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-  border: 2px solid #b3e0ff;
+  background-color: rgba(40, 50, 65, 0.9);
+  border: 2px solid rgba(180, 220, 255, 0.2);
+  padding: 2.5rem 1.5rem 4.375rem;
+  border-radius: 1rem;
   transition: box-shadow 0.3s ease;
+  margin: 0 auto;
+  color: black;
+  transition: transform 0.4s ease;
 }
 
 .todo-app:hover {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  transform: scale(1.01);
 }
 
-.todo-app h2 {
-  color: #002765;
+.todo-app h1 {
+  color: #e0e6f0;
   display: flex;
   align-items: center;
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  font-family: 'Outfit', sans-serif;
+
 }
 
-.todo-app h2 img {
-  width: 32px;
-  margin-left: 12px;
+#empty-message {
+  color: #999;
+  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+  margin-top: .2rem;
+  margin-bottom: 1rem;
+  display: none;
 }
 
 .row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f0f4f7;
-  border-radius: 50px;
-  padding-left: 20px;
-  margin-bottom: 25px;
+  background: #1b2735;
+  border-radius: 5px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #9c9fa3;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 25px auto;
+  padding: 5px;
 }
 
 input {
@@ -60,45 +204,31 @@ input {
   outline: none;
   background: transparent;
   padding: 14px;
-  font-size: 16px;
-  color: #333;
+  font-size: 15px;
+  color: #fff;
+  min-width: 0;
 }
 
 button {
   border: none;
-  padding: 13px 36px;
-  background-color: #66a6ff;
+  padding: 13px 30px;
+  background-color: rgba(40, 50, 65, 0.9);
   color: #fff;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 40px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 0.01rem solid #d0cbcb;
+  border-radius: 5px;
 }
 
 button:hover {
-  background-color: #5593ee;
+  background-color: rgba(70, 78, 91, 0.9);
   transform: scale(1.05);
-}
 
-.heart {
-  font-size: 16px;
-  animation: beat 1s infinite ease-in-out;
-  margin-left: 8px;
-  display: inline-block;
-  color: #fff;
-}
-
-@keyframes beat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.3);
-  }
 }
 
 ul {
@@ -107,28 +237,31 @@ ul {
 
 ul li {
   list-style: none;
-  font-size: 17px;
+  font-size: 15px;
   padding: 12px 8px 12px 50px;
-  user-select: none;
   cursor: pointer;
   position: relative;
   transition: all 0.3s ease;
   border-radius: 10px;
+  background: #3a4f67;
+  margin: 10px;
+  color: white;
 }
 
 ul li:hover {
-  background: #f7f9fb;
+  color: black;
+  background: #e5e0e0;
 }
 
 ul li::before {
   content: '';
   position: absolute;
-  height: 28px;
-  width: 28px;
+  height: 18px;
+  width: 18px;
   background-image: url(./square.png);
   background-size: cover;
   background-position: center;
-  top: 12px;
+  top: 17px;
   left: 8px;
 }
 
@@ -160,12 +293,173 @@ ul li span:hover {
   background: #e4e7eb;
   color: #222;
 }
+
+
 ul li.checked {
   animation: fadeOutIn 0.4s ease;
 }
 
 @keyframes fadeOutIn {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.02); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.edit-input {
+  width: 90%;
+  padding: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  color: black;
+}
+
+/* ____________________________________________ */
+
+/* light theme */
+.svg-sun {
+  position: absolute;
+  top: 15vh;
+  left: 5vw;
+  width: 10vw;
+  height: auto;
+  z-index: 2;
+  display: none;
+  animation: sun-pulse 4s ease-in-out infinite alternate,
+    sun-rotate 20s linear infinite;
+}
+
+@keyframes sun-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes sun-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*Clouds */
+.cloud {
+  position: absolute;
+  background: #ffffffcc;
+  border-radius: 50%;
+  z-index: 1;
+  display: none;
+}
+
+
+.cloud-1 {
+  width: 20vw;
+  height: 10vh;
+  top: 5vh;
+  left: 10vw;
+  box-shadow:
+    6vw 2vh 0 0 #ffffffcc,
+    12vw 0vh 0 0 #ffffffcc;
+}
+
+
+.cloud-2 {
+  width: 18vw;
+  height: 9vh;
+  top: 30vh;
+  right: 5vw;
+  box-shadow:
+    5vw 2vh 0 0 #ffffffcc,
+    10vw 0vh 0 0 #ffffffcc;
+}
+
+
+
+/* __________________________________ */
+body.light-theme {
+  background: linear-gradient(to bottom, #a2cffe 0%, #f6f9fc 100%);
+  color: #333;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+
+
+body.light-theme .svg-moon {
+  display: none;
+}
+
+body.light-theme .star-group {
+  display: none;
+}
+
+body.light-theme .svg-sun,
+body.light-theme .cloud {
+  display: block;
+}
+
+body:not(.light-theme) .svg-sun,
+body:not(.light-theme) .cloud {
+  display: none;
+}
+
+.light-theme .todo-app {
+  background-color: #fdfefe;
+  border: 2px solid #cddfec;
+}
+
+.light-theme .todo-app:hover {
+  box-shadow: 0 5px 5px #d0ecff;
+  transform: scale(1.01);
+}
+
+
+.light-theme .todo-app h1 {
+  color: #6fa1c3;
+}
+
+.light-theme .row {
+  background-color: #ffffff;
+}
+
+.light-theme input {
+  color: black;
+}
+
+.light-theme button {
+  background-color: #6fa1c3;
+}
+
+
+.light-theme ul li:hover {
+  background-color: #7ea8c4;
+}
+
+.light-theme ul li {
+  border: 1px solid #6fa1c3;
+  background-color: transparent;
+  color: black;
+}
+
+.light-theme #theme-toggle {
+  background-color: #40484d;
 }
